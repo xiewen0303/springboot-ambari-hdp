@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- status=debug 可以查看log4j的装配过程 -->
+<configuration status="error" monitorInterval="1800" shutdownHook="disable">
+	<properties>
+		<property name="LOG_HOME">logs/error</property>
+		<property name="MINUTE_HOME">logs/minute</property>
+		<property name="_60MINUTE_HOME">logs/60minute</property>
+		<property name="INFO_HOME">logs/info</property>
+		<property name="DATA_HOME">logs/data</property>
+		
+	</properties>
+	
+	<appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+      		<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss SSS} [%t] %-5level %logger{36} - %msg%n"/>
+    	</Console>
+    	<RollingFile name="info_appender" fileName="${INFO_HOME}/info.log" filePattern="${LOG_HOME}/error-%d{yyyy-MM-dd}-%i.log.gz">
+    		<PatternLayout pattern="%-d{yyyy-MM-dd HH:mm:ss} [%level]-[%thread] %m%n"/>
+    		<SizeBasedTriggeringPolicy size="100 MB" />
+    	</RollingFile>
+    	<!-- 错误日志 -->
+    	<RollingFile name="error_appender" fileName="${LOG_HOME}/error.log" filePattern="${LOG_HOME}/error-%d{yyyy-MM-dd}-%i.log.gz">
+    		<PatternLayout pattern="%-d{yyyy-MM-dd HH:mm:ss} [%level]-[%thread] %m%n"/>
+    		<SizeBasedTriggeringPolicy size="100 MB" />
+    	</RollingFile>
+    	<!-- 启动错误日志 -->
+    	<RollingFile name="start_appender" fileName="${LOG_HOME}/start_game.log" filePattern="${LOG_HOME}/start_game-%d{yyyy-MM-dd}-%i.log.gz">
+    		<PatternLayout pattern="%-d{yyyy-MM-dd HH:mm:ss} [%level]-[%thread] %m%n"/>
+    		<SizeBasedTriggeringPolicy size="100 MB" />
+    	</RollingFile>
+    	<!-- 停机错误日志 -->
+    	<RollingFile name="stop_appender" fileName="${LOG_HOME}/stop_game.log" filePattern="${LOG_HOME}/stop_game-%d{yyyy-MM-dd}-%i.log.gz">
+    		<PatternLayout pattern="%-d{yyyy-MM-dd HH:mm:ss} [%level]-[%thread] %m%n"/>
+    		<SizeBasedTriggeringPolicy size="100 MB" />
+    	</RollingFile>
+    	<!-- IO的错误日志 -->
+    	<RollingFile name="io_error_appender" fileName="${LOG_HOME}/io-error.log" filePattern="${LOG_HOME}/io-error-%d{yyyy-MM-dd}-%i.log.gz">
+    		<PatternLayout pattern="%-d{yyyy-MM-dd HH:mm:ss} [%level]-[%thread] %m%n"/>
+    		<SizeBasedTriggeringPolicy size="100 MB" />
+    	</RollingFile>
+
+    	<!-- 开发人员日志-->
+    	<RollingFile name="dev_appender" fileName="${LOG_HOME}/dev.log" filePattern="${LOG_HOME}/dev-%d{yyyy-MM-dd}-%i.log.gz">
+    		<PatternLayout pattern="%-d{yyyy-MM-dd HH:mm:ss} [%thread] %m%n"/>
+    		<SizeBasedTriggeringPolicy size="100 MB" />
+    	</RollingFile>
+    	
+    	<!-- 服务器状态日志 -->
+    	<RollingFile name="server_status_appender" fileName="${LOG_HOME}/server-status.log" filePattern="${LOG_HOME}/server-status-%d{yyyy-MM-dd}-%i.log.gz">
+    		<PatternLayout pattern="%-d{yyyy-MM-dd HH:mm:ss} [%level]-[%thread] %m%n"/>
+    		<SizeBasedTriggeringPolicy size="100 MB" />
+    	</RollingFile>
+    	
+    	<!-- 内存监控数据日志 -->
+    	<RollingFile name="memory_appender" fileName="${LOG_HOME}/memory_log.log" filePattern="${LOG_HOME}/memory_log-%d{yyyy-MM-dd}-%i.log.gz">
+    		<PatternLayout pattern="%-d{yyyy-MM-dd HH:mm:ss} [%level]-[%thread] %m%n"/>
+    		<SizeBasedTriggeringPolicy size="100 MB" />
+    	</RollingFile>
+    	
+    	<!-- 配置的错误日志 -->
+    	<RollingFile name="config_error_appender" fileName="${LOG_HOME}/config-error.log" filePattern="${LOG_HOME}/config-error-%d{yyyy-MM-dd}-%i.log.gz">
+    		<PatternLayout pattern="%-d{yyyy-MM-dd HH:mm:ss} [%level]-[%thread] %m%n"/>
+    		<SizeBasedTriggeringPolicy size="100 MB" />
+    	</RollingFile>
+
+		<!-- 框架的错误日志主要是场景指令报错 -->
+    	<RollingFile name="frame_appender" fileName="${LOG_HOME}/frame_error.log" filePattern="${LOG_HOME}/frame_error-%d{yyyy-MM-dd}-%i.log.gz">
+    		<PatternLayout pattern="%-d{yyyy-MM-dd HH:mm:ss} [%level]-[%thread] %m%n"/>
+    		<SizeBasedTriggeringPolicy size="100 MB" />
+    	</RollingFile>
+    	
+		<!-- 游戏日志(1分钟) -->
+    	<RollingRandomAccessFile name="_1min_appender" fileName="${MINUTE_HOME}/minute" filePattern="${MINUTE_HOME}/minute-%d{yyyy-MM-dd-HH-mm}.log">
+    		<PatternLayout pattern="%m%n"/>
+    		<Policies>
+				<TimeBasedTriggeringPolicy interval="1" modulate="true" />
+			</Policies>
+    	</RollingRandomAccessFile>
+    	
+		<!-- 游戏日志(60分钟) -->
+    	<RollingFile name="_60min_appender" fileName="${_60MINUTE_HOME}/60_minute_error.log" filePattern="${_60MINUTE_HOME}/60minute_error-%d{yyyy-MM-dd-HH-mm}.log">
+    		<PatternLayout pattern="%-d{yyyy-MM-dd HH:mm:ss} [%level]-[%thread] %m%n"/>
+    		<SizeBasedTriggeringPolicy size="100 MB" />
+    	</RollingFile>
+
+    	<!-- 场景错误日志-->
+    	<RollingFile name="stage_err_appender" fileName="${LOG_HOME}/stage_error.log" filePattern="${LOG_HOME}/stage-%d{yyyy-MM-dd}-%i.log.gz">
+    		<PatternLayout pattern="%-d{yyyy-MM-dd HH:mm:ss} [%thread] %m%n"/>
+    		<SizeBasedTriggeringPolicy size="100 MB" />
+    	</RollingFile>
+    	
+    	<RollingFile name="jy_log_appender" fileName="${DATA_HOME}/jy_log.log" filePattern="${DATA_HOME}/jy_log-%d{yyyy-MM-dd}.log.gz">
+    		<PatternLayout pattern="%m%n"/>
+    		<SizeBasedTriggeringPolicy size="100 MB" />
+    	</RollingFile>
+
+		<!-- 消息日志 -->
+		<RollingFile name="message_appender" fileName="${LOG_HOME}/message.log" filePattern="${LOG_HOME}/message-%d{yyyy-MM-dd}-%i.log.gz">
+			<PatternLayout pattern="%-d{yyyy-MM-dd HH:mm:ss} [%level]-[%thread] %m%n"/>
+			<SizeBasedTriggeringPolicy size="100 MB" />
+		</RollingFile>
+	</appenders>
+	
+	<loggers>
+	 	<logger name="org.springframework" level="warn"/>
+		<logger name="io.netty" level="warn"/>
+		<logger name="org.apache.http" level="warn"/>
+		<logger name="org.apache.commons" level="warn"/>
+		<logger name="com.mchange.v2" level="error"/>
+		<logger name="com.ibatis" level="warn"/>
+		<logger name="com.exadel.flamingo.flex.messaging.amf" level="warn"/>
+		<logger name="java.sql" level="DEBUG" additivity="true" />
+		<logger name="org.quartz" level="warn"/>
+		<logger name="com.opensymphony" level="warn"/>
+		<logger name="com.sun.xml.internal.ws" level="warn"/>
+
+		<logger name="info_logger" level="INFO" additivity="true">
+			<AppenderRef ref="info_appender" />
+		</logger>
+		<logger name="error_logger" level="DEBUG" additivity="true">
+			<AppenderRef ref="error_appender" />
+		</logger>
+		<logger name="start_logger" level="DEBUG" additivity="true">
+			<AppenderRef ref="start_appender" />
+		</logger>
+		<logger name="stop_logger" level="DEBUG" additivity="true">
+			<AppenderRef ref="stop_appender" />
+		</logger>
+		<logger name="io_error_logger" additivity="true">
+			<AppenderRef ref="io_error_appender" />
+		</logger>
+		<logger name="config_error_logger" level="info" additivity="true">
+			<AppenderRef ref="config_error_appender" />
+		</logger>
+		<logger name="server_status_logger" additivity="true">
+			<AppenderRef ref="server_status_appender" />
+		</logger>
+		<logger name="frame_logger" additivity="true">
+			<AppenderRef ref="frame_appender" />
+		</logger>
+		<logger name="memory_logger" additivity="true">
+			<AppenderRef ref="memory_appender" />
+		</logger>
+		<logger name="_1min_logger" level="error" additivity="false">
+			<AppenderRef ref="_1min_appender" />
+		</logger>
+		<logger name="_60min_logger" level="error" additivity="true">
+			<AppenderRef ref="_60min_appender" />
+		</logger>
+		<logger name="_dev_logger" level="info" additivity="true">
+			<AppenderRef ref="dev_appender" />
+		</logger>
+		<logger name="stage_err_logger" level="error" additivity="true">
+			<AppenderRef ref="stage_err_appender" />
+		</logger>
+		<logger name="jy_logger" level="error" additivity="false">
+			<AppenderRef ref="jy_log_appender" />
+		</logger>
+
+		<logger name="message_logger" level="DEBUG" additivity="true">
+			<AppenderRef ref="message_appender" />
+		</logger>
+		
+		<root level="debug">
+			<AppenderRef ref="Console" />
+		</root> 
+		<!--
+			<root level="error">
+	 			<AppenderRef level="error" ref="error_appender" /> 
+ 			</root>
+ 		-->
+	</loggers>
+
+</configuration>

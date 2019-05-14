@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true" scanPeriod="1800 seconds"
+    debug="false">
+
+    <property name="USER_HOME" value="logs" />
+    <property scope="context" name="FILE_NAME" value="crephet-approve-log" />
+
+    <timestamp key="byDay" datePattern="yyyy-MM-dd" />
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %class.%method:%line - %msg%n</pattern>
+        </encoder>
+        <!-- 此日志appender是为开发使用，只配置最底级别，控制台输出的日志级别是大于或等于此级别的日志信息-->  
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">  
+            <level>DEBUG</level>  
+        </filter>  
+    </appender>
+
+    <appender name="file-info" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <append>true</append>  
+    	<prudent>false</prudent>
+        <file>${catalina.home}/logs/${FILE_NAME}-INFO.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>${catalina.home}/logs/${byDay}/${FILE_NAME}-INFO-${byDay}-%i.log.zip
+            </fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>10</maxIndex>
+        </rollingPolicy>
+
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>50MB</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %class.%method:%line - %msg%n</pattern>
+        </encoder>
+        <!-- 此日志文件只记录info级别，不记录大于info级别的日志 -->
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">  
+		    <level>debug</level>  
+		    <onMatch>ACCEPT</onMatch>  
+		    <onMismatch>DENY</onMismatch>  
+		</filter>  
+    </appender>
+
+	<appender name="file-debug" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<append>true</append>  
+    	<prudent>false</prudent>
+        <file>${catalina.home}/logs/${FILE_NAME}-DEBUG.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>${catalina.home}/logs/${byDay}/${FILE_NAME}-DEBUG-${byDay}-%i.log.zip
+            </fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>10</maxIndex>
+        </rollingPolicy>
+
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>50MB</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %class.%method:%line - %msg%n</pattern>
+        </encoder>
+        <!-- 此日志文件只记录DEBUG级别，不记录大于DEBUG级别的日志 -->  
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">  
+		    <level>DEBUG</level>  
+		    <onMatch>ACCEPT</onMatch>  
+		    <onMismatch>DENY</onMismatch>  
+		</filter>  
+    </appender>
+    <appender name="file-warn" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    	<append>true</append>  
+    	<prudent>false</prudent>
+        <file>${catalina.home}/logs/${FILE_NAME}-WARN.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>${catalina.home}/logs/${byDay}/${FILE_NAME}-WARN-${byDay}-%i.log.zip
+            </fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>10</maxIndex>
+        </rollingPolicy>
+
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>50MB</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %class.%method:%line - %msg%n</pattern>
+        </encoder>
+        <!-- 此日志文件只记录warn级别，不记录大于warn级别的日志 -->  
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">  
+		    <level>WARN</level>  
+		    <onMatch>ACCEPT</onMatch>  
+		    <onMismatch>DENY</onMismatch> 
+		</filter>  
+    </appender>
+    
+    <appender name="file-error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    	<append>true</append>  
+    	<prudent>false</prudent>
+        <file>${catalina.home}/logs/${FILE_NAME}-ERROR.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <fileNamePattern>${catalina.home}/logs/${byDay}/${FILE_NAME}-ERROR-${byDay}-%i.log.zip
+            </fileNamePattern>
+            <minIndex>1</minIndex>
+            <maxIndex>10</maxIndex>
+        </rollingPolicy>
+
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>50MB</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %class.%method:%line - %msg%n</pattern>
+        </encoder>
+        <!-- 此日志文件只记录ERROR级别，不记录大于ERROR级别的日志 -->  
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">  
+            <level>ERROR</level>  
+		    <onMatch>ACCEPT</onMatch>  
+		    <onMismatch>DENY</onMismatch>  
+        </filter>  
+    </appender>
+
+	<!--
+		为单独的包配置日志级别，若root的级别大于此级别， 此处级别也会输出  
+		应用场景：生产环境一般不会将日志级别设置为trace或debug，  
+       	其它包则会按root的级别输出日志  
+    -->  
+	<logger name="org.springframework.beans.TypeConverterDelegate" >
+	    <level value="ERROR" />
+	    <appender-ref ref="STDOUT" />
+	</logger>
+	
+    <logger name="com.miaobt" level="DEBUG" additivity="true">
+        <appender-ref ref="file-debug" />
+    </logger>
+
+    <logger name="com.miaobt.approve.decisionengine" level="DEBUG" additivity="false">
+        <appender-ref ref="file-debug" />
+    </logger>
+
+
+    <logger name="java.sql.PreparedStatement" level="DEBUG" />
+    <logger name="java.sql.Connection" level="DEBUG" />
+    <logger name="java.sql.Statement" level="DEBUG" />
+    <logger name="com.ibatis" level="DEBUG" />
+    <logger name="com.ibatis.common.jdbc.SimpleDataSource" level="DEBUG" />
+    <logger name="com.ibatis.common.jdbc.ScriptRunner" level="DEBUG"/>    
+    <logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="DEBUG" />
+    <logger name="venus" level="WARN" />
+    <logger name="org.quartz" level="WARN" />
+    <logger name="com.meidusa" level="WARN" />
+    <logger name="org.apache.commons" level="WARN" />
+
+
+
+	<!-- 生产环境，将此级别配置为适合的级别，以名日志文件太多或影响程序性能 -->  
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="file-info" />
+        <appender-ref ref="file-warn" />
+        <appender-ref ref="file-debug" />
+        <appender-ref ref="file-error" />
+    </root>
+</configuration>

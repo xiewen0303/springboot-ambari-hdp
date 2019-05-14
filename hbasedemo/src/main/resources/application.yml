@@ -1,0 +1,10 @@
+hbase:
+    config:
+      hbase.zookeeper.quorum:  my-remote-test  #data-test-001,data-test-002
+      zookeeper.znode.parent: /hbase-unsecure
+      hbase.client.retries.number: 10
+      hbase.client.keyvalue.maxsize: 31457280
+
+server:
+      port: 9903
+
