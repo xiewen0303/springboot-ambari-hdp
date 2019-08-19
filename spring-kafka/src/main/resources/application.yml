@@ -1,0 +1,20 @@
+server:
+  port: 8012
+
+
+#1. bootstrap servers 如其名，只需要配个两三个就行了，会自动发现其他 broker
+#2. zookeeper 本来只是 Kafka 实现所需要的依赖，暴露给 kafka 使用者我觉得没必要
+#3. Kafka 所有的信息可以通过 API 来获得
+spring:
+  kafka:
+    producer:
+      bootstrap-servers: 10.0.0.201:9092  #kafka地址  如果需要直接连接kafka,可以开启kafka外网访问配置：config/server.properties  advertised.listeners=PLAINTEXT://192.168.239.128:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    consumer:
+      bootstrap-servers: 10.0.0.201:9092
+      group-id: test
+      enable-auto-commit: true
+      auto-commit-interval: 1000
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer

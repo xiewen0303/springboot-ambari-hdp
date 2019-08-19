@@ -19,7 +19,7 @@ public class HbaseController {
     @Resource
     private HbaseService hbaseService;
 
-    @RequestMapping(value = "testHbasePut",produces = {"application/text"})
+    @RequestMapping(value = "testHbasePut",produces = {"application/json"})
     public String testHbasePut(){
         JSONObject bean = new JSONObject();
         bean.put("k1","v1");
@@ -29,5 +29,13 @@ public class HbaseController {
 
         mobileDataModel = hbaseService.findOneByRowKeyValue(mobileDataModel);
         return JSONObject.toJSONString(mobileDataModel);
+    }
+
+    @RequestMapping(value = "testDocker",produces = {"application/json"})
+    public String testDocker(){
+        JSONObject bean = new JSONObject();
+        bean.put("k1","v1");
+        bean.put("k2","v2");
+        return bean.toJSONString();
     }
 }
