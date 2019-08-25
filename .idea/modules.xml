@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/hbase-demo/hbase-demo.iml" filepath="$PROJECT_DIR$/hbase-demo/hbase-demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-kafka/spring-kafka.iml" filepath="$PROJECT_DIR$/spring-kafka/spring-kafka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-ambari-hdp.iml" filepath="$PROJECT_DIR$/springboot-ambari-hdp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot-hadoop/springboot-hadoop.iml" filepath="$PROJECT_DIR$/springboot-hadoop/springboot-hadoop.iml" />
+    </modules>
+  </component>
+</project>
