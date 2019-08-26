@@ -2,4 +2,4 @@
 hbase-demo/catalina.home_IS_UNDEFINED/
 */target/
 /.idea
-/*.iml
+*/*.iml
