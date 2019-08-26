@@ -48,7 +48,11 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
+<<<<<<< HEAD
                 <version>${lombok.version}</version>
+=======
+                <version>1.16.22</version>
+>>>>>>> 556a2002f3ff55f64488601aa9b1f5a9d00a7a5c
                 <scope>provided</scope>
             </dependency>
 
