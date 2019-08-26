@@ -3,3 +3,5 @@ hbase-demo/catalina.home_IS_UNDEFINED/
 */target/
 /.idea
 */*.iml
+/springboot-hadoop/*.iml
+/hbase-demo/*.iml
