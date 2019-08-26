@@ -21,13 +21,17 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
+        <lombok.version>1.18.8</lombok.version>
+        <logback.version>1.2.3</logback.version>
+        <springboot.version>2.1.4.RELEASE</springboot.version>
+        <fastjson.version>1.2.56</fastjson.version>
     </properties>
-
 
     <modules>
         <module>hbasedemo</module>
         <module>springboot-hadoop</module>
         <module>spring-kafka</module>
+        <module>sping-boot-mongodb</module>
     </modules>
 
     <dependencies>
@@ -44,18 +48,40 @@
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <optional>true</optional>
+                <version>${lombok.version}</version>
+                <scope>provided</scope>
             </dependency>
+
             <!-- 日志 -->
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-core</artifactId>
-                <version>1.2.3</version>
+                <version>${logback.version}</version>
             </dependency>
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
-                <version>1.2.3</version>
+                <version>${logback.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${springboot.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${springboot.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>>${fastjson.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
