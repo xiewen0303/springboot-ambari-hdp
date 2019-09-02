@@ -32,6 +32,8 @@
         <module>springboot-hadoop</module>
         <module>spring-kafka</module>
         <module>spingboot-mongodb</module>
+        <module>spring-hive</module>
+        <module>spring-oss-vod</module>
     </modules>
 
     <dependencies>
