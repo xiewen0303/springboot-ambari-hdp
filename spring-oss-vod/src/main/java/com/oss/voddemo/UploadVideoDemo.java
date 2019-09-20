@@ -1,32 +1,26 @@
 package com.oss.voddemo;
 
-public class UploadVideoDemo {
-    //账号AK信息请填写(必选)
-    private static final String accessKeyId = "";
-    //账号AK信息请填写(必选)
-    private static final String accessKeySecret = "";
+import com.alibaba.fastjson.JSONObject;
+import com.aliyun.vod.upload.impl.UploadVideoImpl;
+import com.aliyun.vod.upload.req.UploadVideoRequest;
+import com.aliyun.vod.upload.resp.UploadVideoResponse;
 
-    public static void main(String[] args) {
-        //1.音视频上传-本地文件上传
-        //视频标题(必选)
-        String title = "测试标题";
-        //本地文件上传和文件流上传时，文件名称为上传文件绝对路径，如:/User/sample/文件名称.mp4 (必选)
-        //文件名必须包含扩展名
-        String fileName = "测试文件名称.mp4";
-        //本地文件上传
-        testUploadVideo(accessKeyId, accessKeySecret, title, fileName);
-        //2.图片上传-本地文件上传
-        testUploadImageLocalFile(accessKeyId, accessKeySecret);
+/**
+ * 直接上传
+ */
+public class UploadVideoDemo {
+
+    public static void main1(String[] args) {
+//        String accessKeyId = "LTAI4FwqD1rmfbK67HnhutcJ";
+//        String accessKeySecret = "4Ul0kT5vdL5TcuV2zhZH8A6m2Ke86v";
+        //TODO  这里使用的是主账号，RAM子账号不可以用
+        String accessKeyId = "LTAI4FgZ5r4U7CBFaG6uQxiQ";
+        String accessKeySecret = "sz6R28JlKJ3yoS5yHzUJmC9PfFoA9i";
+        uploadVideo(accessKeyId,accessKeySecret,"test","D:\\tmp\\test1.mp4");
     }
-    /**
-     * 本地文件上传接口
-     *
-     * @param accessKeyId
-     * @param accessKeySecret
-     * @param title
-     * @param fileName
-     */
-    private static void testUploadVideo(String accessKeyId, String accessKeySecret, String title, String fileName) {
+
+    //直接上传到服务端，没有走STS
+    public static void uploadVideo(String accessKeyId, String accessKeySecret, String title, String fileName){
         UploadVideoRequest request = new UploadVideoRequest(accessKeyId, accessKeySecret, title, fileName);
         /* 可指定分片上传时每个分片的大小，默认为1M字节 */
         request.setPartSize(1 * 1024 * 1024L);
@@ -35,7 +29,7 @@ public class UploadVideoDemo {
         /* 是否开启断点续传, 默认断点续传功能关闭。当网络不稳定或者程序崩溃时，再次发起相同上传请求，可以继续未完成的上传任务，适用于超时3000秒仍不能上传完成的大文件。
         注意: 断点续传开启后，会在上传过程中将上传位置写入本地磁盘文件，影响文件上传速度，请您根据实际情况选择是否开启*/
         request.setEnableCheckpoint(false);
-        /* OSS慢请求日志打印超时时间，是指每个分片上传时间超过该阈值时会打印debug日志，如果想屏蔽此日志，请调整该阈值。单位: 毫秒，默认为300000毫秒*/
+         /* OSS慢请求日志打印超时时间，是指每个分片上传时间超过该阈值时会打印debug日志，如果想屏蔽此日志，请调整该阈值。单位: 毫秒，默认为300000毫秒*/
         //request.setSlowRequestsThreshold(300000L);
         /* 可指定每个分片慢请求时打印日志的时间阈值，默认为300s*/
         //request.setSlowRequestsThreshold(300000L);
@@ -63,50 +57,15 @@ public class UploadVideoDemo {
         // request.setProgressListener(new PutObjectProgressListener());
         UploadVideoImpl uploader = new UploadVideoImpl();
         UploadVideoResponse response = uploader.uploadVideo(request);
-        System.out.print("RequestId=" + response.getRequestId() + "\n");  //请求视频点播服务的请求ID
+        System.out.println("RequestId=" + response.getRequestId());  //请求视频点播服务的请求ID
         if (response.isSuccess()) {
-            System.out.print("VideoId=" + response.getVideoId() + "\n");
+            System.out.println("VideoId=" + response.getVideoId());
+            System.out.println(JSONObject.toJSONString(response));
         } else {
             /* 如果设置回调URL无效，不影响视频上传，可以返回VideoId同时会返回错误码。其他情况上传失败时，VideoId为空，此时需要根据返回错误码分析具体错误原因 */
-            System.out.print("VideoId=" + response.getVideoId() + "\n");
-            System.out.print("ErrorCode=" + response.getCode() + "\n");
-            System.out.print("ErrorMessage=" + response.getMessage() + "\n");
-        }
-    }
-    /**
-     * 图片上传接口，本地文件上传示例
-     * 参数参考文档 https://help.aliyun.com/document_detail/55619.html
-     *
-     * @param accessKeyId
-     * @param accessKeySecret
-     */
-    private static void testUploadImageLocalFile(String accessKeyId, String accessKeySecret) {
-        // 图片类型（必选）取值范围：default（默认)，cover（封面），watermark(水印)
-        String imageType = "cover";
-        UploadImageRequest request = new UploadImageRequest(accessKeyId, accessKeySecret, imageType);
-        /* 图片文件扩展名（可选）取值范围：png，jpg，jpeg */
-        //request.setImageExt("png");
-        /* 图片标题（可选）长度不超过128个字节，UTF8编码 */
-        //request.setTitle("图片标题");
-        /* 图片标签（可选）单个标签不超过32字节，最多不超过16个标签，多个用逗号分隔，UTF8编码 */
-        //request.setTags("标签1,标签2");
-        /* 存储区域（可选）*/
-        //request.setStorageLocation("out-4f3952f78c0211e8b3020013e7.oss-cn-shanghai.aliyuncs.com");
-        /* 流式上传时，InputStream为必选，fileName为源文件名称，如:文件名称.png(可选)*/
-        //request.setFileName("测试文件名称.png");
-        /* 开启默认上传进度回调 */
-        // request.setPrintProgress(true);
-        /* 设置自定义上传进度回调 (必须继承 ProgressListener) */
-        // request.setProgressListener(new PutObjectProgressListener());
-        UploadImageImpl uploadImage = new UploadImageImpl();
-        UploadImageResponse response = uploadImage.upload(request);
-        System.out.print("RequestId=" + response.getRequestId() + "\n");
-        if (response.isSuccess()) {
-            System.out.print("ImageId=" + response.getImageId() + "\n");
-            System.out.print("ImageURL=" + response.getImageURL() + "\n");
-        } else {
-            System.out.print("ErrorCode=" + response.getCode() + "\n");
-            System.out.print("ErrorMessage=" + response.getMessage() + "\n");
+            System.out.println("VideoId=" + response.getVideoId() );
+            System.out.println("ErrorCode=" + response.getCode() );
+            System.out.println("ErrorMessage=" + response.getMessage());
         }
     }
 }

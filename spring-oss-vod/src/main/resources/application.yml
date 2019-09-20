@@ -1,0 +1,6 @@
+
+vod:
+  aliyun:
+    region: cn-hangzhou
+    stsApiVersion: 2015-04-01
+    tockenDurationSeconds: 3600
