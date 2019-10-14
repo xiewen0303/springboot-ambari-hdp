@@ -1,0 +1,7 @@
+server:
+  port: 8061
+
+#页面采用的模板类型
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/

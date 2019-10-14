@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true" scanPeriod="1800 seconds"
+               debug="false">
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <property scope="context" name="FILE_NAME" value="jupterweb"/>
+    <property scope="context" name="LOG_PATH" value="/spring-boot/logs"/>
+
+    <property scope="context" name="GLOBAL_LEVEL" value="WARN"/>
+    <property scope="context" name="SPRING_LEVEL" value="WARN"/>
+    <property scope="context" name="PROJECT_LEVEL" value="DEBUG"/>
+
+    <property name="ANALYSE_LOG_PATTERN"
+              value="%m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+
+    <appender name="file-analyse"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${ANALYSE_LOG_PATTERN}</pattern>
+        </encoder>
+        <file>${LOG_PATH}/${FILE_NAME}-ANALYSE.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/${FILE_NAME}-ANALYSE-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>50MB</maxFileSize>
+            <maxHistory>120</maxHistory>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <property name="CONSOLE_LOG_PATTERN"
+              value="%red(%d{yyyy-MM-dd HH:mm:ss}) Console %green([%thread]) %highlight(%-5level) %boldMagenta(%logger{10}) - %cyan(%msg%n)"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>utf8</charset>
+        </encoder>
+    </appender>
+
+    <property name="FILE_LOG_PATTERN"
+              value="${FILE_LOG_PATTERN:-%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:-%5p} ${thread:- } --- [%t] %-40.40logger{39} : %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+
+    <!-- 开发环境专用 -->
+    <root level="DEBUG">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+    <!-- 开发环境专用 -->
+
+    <appender name="file-debug"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+        <file>${LOG_PATH}/${FILE_NAME}-DEBUG.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/${FILE_NAME}-DEBUG-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>50MB</maxFileSize>
+            <maxHistory>120</maxHistory>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="file-info"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+        <file>${LOG_PATH}/${FILE_NAME}-INFO.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/${FILE_NAME}-INFO-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>50MB</maxFileSize>
+            <maxHistory>120</maxHistory>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="file-warn"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+        <file>${LOG_PATH}/${FILE_NAME}-WARN.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/${FILE_NAME}-WARN-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>50MB</maxFileSize>
+            <maxHistory>120</maxHistory>
+        </rollingPolicy>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="file-error"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+        <file>${LOG_PATH}/${FILE_NAME}-ERROR.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/${FILE_NAME}-ERROR-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>50MB</maxFileSize>
+            <maxHistory>120</maxHistory>
+        </rollingPolicy>
+        <!-- 此日志文件只记录DEBUG级别，不记录大于DEBUG级别的日志 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <logger name="java.sql" level="${GLOBAL_LEVEL}"/>
+    <logger name="com.ibatis" level="${GLOBAL_LEVEL}"/>
+    <logger name="venus" level="${GLOBAL_LEVEL}"/>
+    <logger name="sun" level="${GLOBAL_LEVEL}"/>
+    <logger name="druid" level="${GLOBAL_LEVEL}"/>
+    <logger name="com.alibaba" level="${GLOBAL_LEVEL}"/>
+    <logger name="org.quartz" level="${GLOBAL_LEVEL}"/>
+    <logger name="org.mybatis" level="${GLOBAL_LEVEL}"/>
+    <logger name="com.meidusa" level="${GLOBAL_LEVEL}"/>
+    <logger name="org.apache" level="${GLOBAL_LEVEL}"/>
+    <logger name="org.jboss" level="${GLOBAL_LEVEL}"/>
+    <logger name="org.hibernate" level="${GLOBAL_LEVEL}"/>
+    <logger name="redis" level="${GLOBAL_LEVEL}"/>
+    <logger name="com.netflix" level="INFO"/>
+    <logger name="com.zaxxer" level="INFO"/>
+    <logger name="org.springframework" level="${SPRING_LEVEL}"/>
+    <logger name="com.tron.common.mysql.mybatis" level="INFO"/>
+    <logger name="com.jupiter.web.manager.common.base" level="INFO"/>
+    <logger name="org.thymeleaf" level="INFO"/>
+    <logger name="com.mongodb" level="INFO"/>
+    <logger name="org.neo4j.ogm" level="INFO"/>
+
+    <logger name="org.springframework" level="${SPRING_LEVEL}"/>
+
+    <root level="${PROJECT_LEVEL}">
+        <appender-ref ref="file-info"/>
+        <appender-ref ref="file-warn"/>
+        <appender-ref ref="file-debug"/>
+        <appender-ref ref="file-error"/>
+    </root>
+
+    <logger name="com.jupiter.web.manager.log.appLog.AppLogUtil" additivity="false" level="WARN">
+        <appender-ref ref="file-analyse"/>
+    </logger>
+</configuration>
