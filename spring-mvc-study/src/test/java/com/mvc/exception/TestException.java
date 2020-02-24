@@ -1,6 +1,6 @@
 package com.mvc.exception;
 
-import com.tron.common.util.HttpClientUtils;
+//import com.tron.common.util.HttpClientUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 
@@ -14,8 +14,8 @@ public class TestException {
     @Test
     public void testParameterException() throws  Exception {
         Map<String,String> params = new HashMap<>();
-        String resp = HttpClientUtils.doPost(LOCAL_URL+"/test/testParameterException",params);
-        log.info("==================:{}",resp);
+//        String resp = HttpClientUtils.doPost(LOCAL_URL+"/test/testParameterException",params);
+//        log.info("==================:{}",resp);
     }
 
 
@@ -23,8 +23,8 @@ public class TestException {
     public void testBusinessException() throws  Exception {
         Map<String,String> params = new HashMap<>();
 //        params.put("target","1");
-        String resp = HttpClientUtils.doPost(LOCAL_URL+"/test/testBusinessException",params);
-        log.info("==================:{}",resp);
+//        String resp = HttpClientUtils.doPost(LOCAL_URL+"/test/testBusinessException",params);
+//        log.info("==================:{}",resp);
     }
 
 }
